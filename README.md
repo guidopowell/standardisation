@@ -2,6 +2,8 @@ standardisation
 ================
 
 -   [Introduction](#introduction)
+    -   [Installation](#installation)
+    -   [Description courte](#description-courte)
     -   [Exemples d’utilisation](#exemples-dutilisation)
 -   [Description détaillée](#description-détaillée)
     -   [`agregation`](#agregation)
@@ -19,6 +21,23 @@ groupes d’âge, le sexe et autres variables fournis, en utilisant soit
 une population de référence interne, soit externe. De plus, la fonction
 agregation permet de convertir les données individuelles ou
 partiellement agrégées en un format propice à la standardisation.
+
+<br>
+
+## Installation
+
+Pour installer à partir de github il faut avoir installé le package
+devtools.
+
+``` r
+if (!require("devtools")) {
+  install.packages("devtools")
+}
+devtools::install_github("guidopowell/standardisation")
+library(standardisation)
+```
+
+## Description courte
 
 Le package comprend trois fonctions principales :
 
@@ -345,11 +364,9 @@ en ajustant avec une année de référence externe. Pour ce faire nous
 allons refaire l’agrégation des données. Pour l’agrégation nous allons
 prendre un dénominateur externe. Cela permettra d’illustrer la nuance
 entre l’utilisation du fichier de population externe pour les
-dénominateurs et la référence.  
-
-Par exemple lorsque l’unité est une année et on veut un dénominateur
-externe (`type_denom` = “externe”), il faut préciser
-`denom_externe_type_unite` = “Annuel”. Dans ce cas il n’est pas
+dénominateurs et la référence. Par exemple lorsque l’unité est une année
+et on veut un dénominateur externe (`type_denom` = “externe”), il faut
+préciser `denom_externe_type_unite` = “Annuel”. Dans ce cas il n’est pas
 nécessaire de préciser une année pour `denom_externe_annee` un niveaux
 de géographie `denom_externe_geo` (dans cette situation ce sont les
 populations annnuelles de l’ensemble du Québec qui servent comme
@@ -371,7 +388,6 @@ print(agr_ext)
 ## Error in print(agr_ext): objet 'agr_ext' introuvable
 ```
 
-  
 Maintenant nous poursuivons avec une standardisation externe de ces
 données. Cette fois il faut préciser une année pour `ref_externe_annee`
 car il n’y a qu’une seule année qui sert comme référence. La valeur “99”
