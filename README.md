@@ -218,7 +218,7 @@ autorisées. Les combinaisons autorisées sont les suivantes :
 -   `type_num = "colonne agrégée"` peut être associé avec
     `type_denom = "colonne_agrégée"` ou `type_denom = "externe"`.
 
-![](V:/GI/Projets/4.Projets_en_cours/Standardisation/package%20R/image.PNG)
+<img src="image.PNG" width="90%" style="display: block; margin: auto;" />
 
 <br>
 
