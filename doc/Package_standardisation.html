@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>standardisation</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+<style type="text/css">
+  code {
+    white-space: pre;
+  }
+  .sourceCode {
+    overflow: visible;
+  }
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">standardisation</h1>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#introduction">Introduction</a>
+<ul>
+<li><a href="#exemples-dutilisation">Exemples d’utilisation</a></li>
+</ul></li>
+<li><a href="#description-détaillée">Description détaillée</a>
+<ul>
+<li><a href="#agregation"><code>agregation</code></a>
+<ul>
+<li><a href="#regroupement-dâge">Regroupement d’âge</a></li>
+<li><a href="#structure-des-données">Structure des données</a></li>
+</ul></li>
+<li><a href="#standardisation_interne"><code>standardisation_interne</code></a></li>
+<li><a href="#standardisation_externe"><code>standardisation_externe</code></a></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="introduction" class="section level1">
+<h1>Introduction</h1>
+<p>Le package <strong>standardisation</strong> comprend un ensemble de
+fonctions conçues pour la standardisation et la transformation des
+données. Ce package se concentre principalement sur la standardisation
+des données basée par groupes d’âge, le sexe et autres variables
+fournis, en utilisant soit une population de référence interne, soit
+externe. De plus, la fonction agregation permet de convertir les données
+individuelles ou partiellement agrégées en un format propice à la
+standardisation.</p>
+<p>Le package comprend trois fonctions principales :</p>
+<p><code>agregation()</code> : Cette fonction est conçue pour
+transformer des données individuelles ou partiellement agrégées en un
+format adapté pour les fonctions de standardisation. Elle peut gérer une
+large gamme de types et de formes de données, garantissant une
+flexibilité pour répondre à divers besoins d’agrégation de données.</p>
+<p>Il convient de noter que les données entièrement agrégées qui
+répondent déjà aux exigences des fonctions de standardisation peuvent
+contourner cette étape et passer directement à la standardisation.</p>
+<p><code>standardisation_interne()</code> : Cette fonction applique une
+standardisation interne à des données agrégées. Dans le processus de
+standardisation, elle utilise soit la somme des données d’entrée comme
+population de référence ou une unité spécifiée par
+<code>reference_unite</code>. La fonction ajuste pour des facteurs tels
+que le groupe d’âge, le sexe, et d’autres variables fournies</p>
+<p>La standardisation interne peut-être directe ou indirecte.</p>
+<p><code>standardisation_externe()</code> : Cette fonction applique une
+standardisation externe à des données agrégées, prenant comme référence
+un fichier de données <code>pop_ref</code> réprésentant la population du
+Québec stratifiée par âge et sexe, à de différentes années et niveaux
+géographiques. Cette approche est utile lorsque les données à ajuster ne
+sont pas suffisamment représentatif de la population (par exemple une
+petite cohorte de patients ayant reçu un nouveau médicamment).</p>
+<p>La standardisation externe doit être directe car les numérateurs de
+la population référence ne sont pas disponible.</p>
+<p><br></p>
+<div id="exemples-dutilisation" class="section level2">
+<h2>Exemples d’utilisation</h2>
+<p>Voici un exemple simple d’utilisation avec des données simulées de
+patients hospitalisés parmi lesquels certains sont décédés (valeur “Oui”
+pour la variable <code>deces</code>). On veut comparer les taux de décès
+entre les régions (RSS) en ajustant pour l’âge. Les détails d’arguments
+sont précisés plus bas.</p>
+<p>La première étape est d’agréger les données brutes.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>agr<span class="ot">&lt;-</span><span class="fu">agregation</span>(<span class="at">donnees =</span> donnees_sim <span class="sc">%&gt;%</span> <span class="fu">filter</span>(annee <span class="sc">==</span> <span class="st">&quot;2022&quot;</span>), </span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>                   <span class="at">unite =</span> <span class="st">&quot;rss&quot;</span>,</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">age =</span> <span class="st">&quot;age&quot;</span>,</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">age_cat_mins =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>),</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>                   <span class="at">type_num =</span> <span class="st">&quot;filtré&quot;</span>,</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">num_filtre_expression =</span> <span class="st">&quot;deces == &#39;Oui&#39; &quot;</span>,</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                   <span class="at">type_denom =</span> <span class="st">&quot;total interne&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in agregation(donnees = donnees_sim %&gt;% filter(annee == &quot;2022&quot;), : impossible de trouver la fonction &quot;agregation&quot;</span></span></code></pre></div>
+<p><br></p>
+<p>Une fois agrégée, les données peuvent être standardisées, dans cet
+exemple on fait une standardisation interne et indirecte. Le
+regroupement de la variable d’âge de la fonction agregation sort une
+variable nommée “AGE_CAT” et des colonnes “num” et “denom” pour les
+numérateurs et dénominateurs respectivement.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>st_i<span class="ot">&lt;-</span><span class="fu">standardisation_interne</span>(<span class="at">donnees =</span> agr,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">unite   =</span> <span class="st">&quot;rss&quot;</span>,</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">age_cat =</span> <span class="st">&quot;AGE_CAT&quot;</span> ,</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">numerateur =</span> <span class="st">&quot;num&quot;</span>,</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">denominateur =</span> <span class="st">&quot;denom&quot;</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">methode =</span> <span class="st">&quot;indirecte&quot;</span>,</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">multiplicateur =</span> <span class="dv">100</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in standardisation_interne(donnees = agr, unite = &quot;rss&quot;, age_cat = &quot;AGE_CAT&quot;, : impossible de trouver la fonction &quot;standardisation_interne&quot;</span></span></code></pre></div>
+<p>On peut vérifier l’objet “Resultats” de la standardisation dans la
+liste d’objets sortants (l’objet “Details” contient les strates
+d’agrégation)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>st_i<span class="sc">$</span>Resultat</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in eval(expr, envir, enclos): objet &#39;st_i&#39; introuvable</span></span></code></pre></div>
+<p><br></p>
+<p>Et voici ici un exemple d’une standardisation externe et directe.
+Notez que les groupes d’âges doivent être spéficiés de nouveau pour
+permettre la correspondance avec le dataframe de référence externe. La
+valeur 99 pour ref_externe_code fait référence au niveau géographique de
+l’ensemble du Québec.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>st_e<span class="ot">&lt;-</span><span class="fu">standardisation_externe</span>(<span class="at">donnees =</span> agr,</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">unite   =</span> <span class="st">&quot;rss&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">age_cat =</span> <span class="st">&quot;AGE_CAT&quot;</span> ,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">age_cat_mins =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">50</span>,<span class="dv">60</span>,<span class="dv">70</span>),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">numerateur =</span> <span class="st">&quot;num&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">denominateur =</span> <span class="st">&quot;denom&quot;</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ref_externe_annee =</span> <span class="dv">2022</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ref_externe_code =</span> <span class="st">&quot;99&quot;</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">multiplicateur =</span> <span class="dv">100</span>)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in standardisation_externe(donnees = agr, unite = &quot;rss&quot;, age_cat = &quot;AGE_CAT&quot;, : impossible de trouver la fonction &quot;standardisation_externe&quot;</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>st_e<span class="sc">$</span>Resultat</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in eval(expr, envir, enclos): objet &#39;st_e&#39; introuvable</span></span></code></pre></div>
+<p><br></p>
+<p><br></p>
+</div>
+</div>
+<div id="description-détaillée" class="section level1">
+<h1>Description détaillée</h1>
+<p>Regardons plus en détail les trois fonctions.</p>
+<div id="agregation" class="section level2">
+<h2><code>agregation</code></h2>
+<div id="regroupement-dâge" class="section level3">
+<h3>Regroupement d’âge</h3>
+<p>La fonction <code>agregation()</code> est surtout utile lorsqu’il
+faut regrouper des valeurs d’âge continu et compter la somme par groupe.
+Pour se faire, il faut spécifier l’argument <code>age_cat_mins</code>
+(et si nécessaire <code>age_filtre_max</code>). Cet argument prend comme
+valeur un vecteur des âges minimum de chaque groupe, par exemple,
+c(18,40,60,80). Cet exemple produirait les groupes d’âge suivant: [18,
+39), [40, 59), [60, 79), et [80, Inf). La première valeur du vecteur
+crée un filtre sur les données en excluant les patients de moins de 18
+ans (une valeur de 0 n’applique pas de filtre). Par défaut, l’âge
+maximale est Inf, donc aucun filtre n’est appliqué pour la dernier
+groupe d’âge. Si nécessaire, une valeur peut être spéficifié pour
+<code>age_filtre_max</code> qui permettrait des exclure les patients en
+bas de cet âge (la valeur est un maximum “exclusif”).</p>
+<p><br></p>
+</div>
+<div id="structure-des-données" class="section level3">
+<h3>Structure des données</h3>
+<p>Bien que l’utilisation typique de cette fonction est d’agréger des
+données individuelles ayants des valeurs d’âges continus, la fonction
+offre aussi de la flexibilité dans la manière dont les numérateurs et
+les dénominateurs sont identifiés et calculés. Cependant, il est
+important de noter que toutes les combinaisons des types de numérateurs
+(<code>type_num</code>) et de dénominateurs (<code>type_denom</code>) ne
+sont pas autorisées.</p>
+<div id="numérateurs" class="section level4">
+<h4><strong>Numérateurs</strong></h4>
+<p>Il y a trois façons d’identifier les numérateurs dans un ensemble de
+données :</p>
+<ol style="list-style-type: decimal">
+<li><p><code>type_num = &quot;filtré&quot;</code> : Une expression logique est
+spécifié pour identifier quelles lignes dans un ensemble de données
+individuelles doivent être comptées. Cette option nécessite l’argument
+<code>num_filtre_expression</code> (par exemple,
+<code>num_filtre_expression  = &quot;hospitalisation == TRUE&quot;</code>
+).</p></li>
+<li><p><code>type_num = &quot;total interne&quot;</code> : L’ensemble de données
+individuelles fourni est compté comme dénominateur.</p></li>
+<li><p><code>type_num = &quot;colonne agrégée&quot;</code> : Les données sont
+partiellement agrégées et une colonne spécifie les décomptes des
+numérateurs. Cette option nécessite l’argument
+<code>numerateur_agr_col.</code></p></li>
+</ol>
+<p><br></p>
+</div>
+<div id="dénominateurs" class="section level4">
+<h4><strong>Dénominateurs</strong></h4>
+<p>De même, il y a trois façons d’obtenir les dénominateurs :</p>
+<ol style="list-style-type: decimal">
+<li><p><code>type_denom = &quot;total_interne&quot;</code> : L’ensemble de données
+individuelles fourni est compté comme dénominateur.</p></li>
+<li><p><code>type_denom = &quot;externe&quot;</code> : Un ensemble de données de
+population externe agrégé , le fichier <code>pop_ref</code>, est utilisé
+comme dénominateurs. Cette option nécessite l’argument
+<code>denom_externe_type_unite</code>. Si ce dernier est “Régional”, il
+faut préciser une valeur pour <code>denom_externe_annee</code> et
+<code>denom_externe_geo</code>. Un dernier argument facultatif est
+<code>denom_externe_regroupement_unite</code> (voir plus bas).</p></li>
+<li><p><code>type_denom = &quot;colonne_agrégée&quot;</code> : Les données sont
+partiellement agrégées et une colonne spécifie les décomptes des
+dénominateurs. Cette option nécessite l’argument
+<code>denominateur_agr_col.</code></p></li>
+</ol>
+<p><br></p>
+</div>
+<div id="combinaisons-autorisées" class="section level4">
+<h4><strong>Combinaisons autorisées</strong></h4>
+<p>Toutes les combinaisons de <code>type_num</code> et
+<code>type_denom</code> ne sont pas autorisées. Les combinaisons
+autorisées sont les suivantes :</p>
+<ul>
+<li><p><code>type_num = &quot;filtré&quot;</code> peut être associé avec
+<code>type_denom = &quot;total_interne&quot;</code> ou
+<code>type_denom = &quot;externe&quot;</code>.</p></li>
+<li><p><code>type_num = &quot;total_interne&quot;</code> ne peut être utilisé
+qu’avec <code>type_denom = &quot;externe&quot;</code>.</p></li>
+<li><p><code>type_num = &quot;colonne agrégée&quot;</code> peut être associé avec
+<code>type_denom = &quot;colonne_agrégée&quot;</code> ou
+<code>type_denom = &quot;externe&quot;</code>.</p></li>
+</ul>
+<p><img src="data:image/png;base64,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" /></p>
+<p><br></p>
+</div>
+<div id="exemple-de-regroupement-dunité" class="section level4">
+<h4><strong>Exemple de regroupement d’unité</strong></h4>
+<p>Dans un scénario où l’agrégation se fait avec un dénominateur externe
+et que les unités du numérateur représentent de regroupement d’unités
+(par exemple “Régions du nord” pour les RSS 10, 18 et 19 ou “2020 à
+2022” pour les années 2020, 2021 et 2022), l’argument
+<code>denom_externe_regroupement_unite</code> permet de effectuer une
+correspondance entre ces regroupements d’unités et les unités du fichier
+<code>pop_ref</code>. Les valeurs acceptées pour cet argument doit être
+en format de liste où les noms des éléments correspondent aux valeurs
+regroupés de <code>donnees</code> et les valeurs de chaque élément
+représente les unités de <code>pop_ref</code> à regrouper.</p>
+<p>Prenons un exemple où les RSS de Montréal et Laval et de
+Capitale-Nationale et Chaudières-Appalaches sont regroupés dans les
+mêmes zones.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#création de données avec zones </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>donnees_regroup <span class="ot">&lt;-</span> donnees_sim <span class="sc">%&gt;%</span> <span class="fu">filter</span>(annee <span class="sc">==</span> <span class="dv">2021</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in donnees_sim %&gt;% filter(annee == 2021): impossible de trouver la fonction &quot;%&gt;%&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>donnees_regroup <span class="ot">&lt;-</span> donnees_regroup <span class="sc">%&gt;%</span> </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zone=</span><span class="fu">case_when</span>(rss_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;06&quot;</span>,<span class="st">&quot;13&quot;</span>) <span class="sc">~</span> <span class="st">&quot;Mtl_Laval&quot;</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                        rss_code <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">&quot;03&quot;</span>,<span class="st">&quot;12&quot;</span>) <span class="sc">~</span> <span class="st">&quot;C.N._Ch-Ap.&quot;</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                        T <span class="sc">~</span> rss_code))</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in donnees_regroup %&gt;% mutate(zone = case_when(rss_code %in% c(&quot;06&quot;, : impossible de trouver la fonction &quot;%&gt;%&quot;</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#agrégation avec regroupement de dénominateurs externe</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>agr_avec_regroup<span class="ot">&lt;-</span><span class="fu">agregation</span>(<span class="at">donnees =</span> donnees_regroup,</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>                   <span class="at">unite =</span> <span class="st">&quot;zone&quot;</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>                   <span class="at">age=</span><span class="st">&quot;age&quot;</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>                   <span class="at">age_cat_mins =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">75</span>),</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>                   <span class="at">type_num=</span> <span class="st">&quot;filtré&quot;</span>,</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                   <span class="at">num_filtre_expression=</span><span class="st">&quot;deces == &#39;Oui&#39; &quot;</span>,</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                   <span class="at">type_denom=</span><span class="st">&quot;externe&quot;</span>,</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                   <span class="at">denom_externe_annee=</span><span class="dv">2021</span>,</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                   <span class="at">denom_externe_geo=</span><span class="st">&quot;RSS&quot;</span>,</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                   <span class="at">denom_externe_type_unite=</span> <span class="st">&quot;Régional&quot;</span>,</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>                   <span class="at">denom_externe_regroupement_unite=</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>                     <span class="fu">list</span>(<span class="st">&quot;Mtl_Laval&quot;</span><span class="ot">=</span><span class="fu">c</span>(<span class="st">&quot;06&quot;</span>,<span class="st">&quot;13&quot;</span>),</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>                          <span class="st">&quot;C.N._Ch-Ap.&quot;</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="st">&quot;03&quot;</span>,<span class="st">&quot;12&quot;</span>))</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in agregation(donnees = donnees_regroup, unite = &quot;zone&quot;, age = &quot;age&quot;, : impossible de trouver la fonction &quot;agregation&quot;</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(agr_avec_regroup,<span class="at">n =</span> <span class="cn">Inf</span>)</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in print(agr_avec_regroup, n = Inf): objet &#39;agr_avec_regroup&#39; introuvable</span></span></code></pre></div>
+<p><br></p>
+<p><br></p>
+<p>Avec les données agrégés, on peut maintenant passer à la
+standardisation. Si vous aviez des données déjà agrégées, il faut
+s’assurer que toutes les strates sont inclues, même celles qui ont 0
+comme numérateur.</p>
+<p><br></p>
+</div>
+</div>
+</div>
+<div id="standardisation_interne" class="section level2">
+<h2><code>standardisation_interne</code></h2>
+<p>La standardisation interne permet de prendre comme référence la
+population de l’ensemble de données, évitant alors le besoin d’apparier
+des données de référence externe. Il est aussi possible dans la
+standardisation interne de sélectionner une unité de l’analyse (par
+exemple, une région ou une année) comme référence. Dans cet exemple on
+reprend celui décris plus haut mais en spécifiant le RSS de Montréal
+(“06_Montréal” ) comme référence.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>st_i<span class="ot">&lt;-</span><span class="fu">standardisation_interne</span>(<span class="at">donnees =</span> agr,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                            <span class="at">unite   =</span> <span class="st">&quot;rss&quot;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">age_cat =</span> <span class="st">&quot;AGE_CAT&quot;</span> ,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">numerateur =</span> <span class="st">&quot;num&quot;</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">denominateur =</span> <span class="st">&quot;denom&quot;</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">reference_unite =</span> <span class="st">&quot;06_Montréal&quot;</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">methode =</span> <span class="st">&quot;indirecte&quot;</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">multiplicateur =</span> <span class="dv">100</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in standardisation_interne(donnees = agr, unite = &quot;rss&quot;, age_cat = &quot;AGE_CAT&quot;, : impossible de trouver la fonction &quot;standardisation_interne&quot;</span></span></code></pre></div>
+<p>Dans l’élement “Resultats” on contate que le ratio pour Montréal est
+de 1, car le nombre observés de cas est le même que le “expected” étant
+donné que c’est la référence.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>st_i<span class="sc">$</span>Resultat</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in eval(expr, envir, enclos): objet &#39;st_i&#39; introuvable</span></span></code></pre></div>
+<p><br></p>
+<p><br></p>
+</div>
+<div id="standardisation_externe" class="section level2">
+<h2><code>standardisation_externe</code></h2>
+<p>La standardisation externe permet d’ajuster les unités d’analyse
+(régions ou années) en prenant comme référence le fichier de population
+du Québec, <code>ref_pop</code> . Il est important de bien spécifier
+plusieurs arguments pour permettre l’appariement des données de
+référence.</p>
+<ul>
+<li><p><code>age_cat_mins</code> doit préciser quels groupes d’âges sont
+représentés dans la variable <code>age</code> pour permettre la même
+catégorisation de la variable d’âge des données externes</p></li>
+<li><p><code>age_filtre_max</code> est facultatif, mais il doit être
+précisé si les données d’analyse ont un âge maximum.</p></li>
+<li><p><code>ref_externe_annee</code> . Le fichier <code>pop_ref</code>
+contient des données de population datant de 1996 jusqu’à 2041
+(projections). Il faut sélectionner une année comme référence.</p></li>
+<li><p><code>ref_externe_code</code>. Le fichier <code>pop_ref</code>
+contient des données pour l’ensemble du Québec, ou par différents
+niveaux géographiques (RSS, RLS, RTS). Le code “99” sert à sélectionner
+l’ensemble du Québec comme référence. Les codes de RSS sont une chaînes
+de 2 caractères, les RTS sont de 3 caractères, et les RLS sont de 4
+caractères.</p></li>
+</ul>
+<p>Le prochain exemple démontre un scénario où on veut comparer des
+années, en ajustant avec une année de référence externe. Pour ce faire
+nous allons refaire l’agrégation des données. Pour l’agrégation nous
+allons prendre un dénominateur externe. Cela permettra d’illustrer la
+nuance entre l’utilisation du fichier de population externe pour les
+dénominateurs et la référence.<br />
+</p>
+<p>Par exemple lorsque l’unité est une année et on veut un dénominateur
+externe (<code>type_denom</code> = “externe”), il faut préciser
+<code>denom_externe_type_unite</code> = “Annuel”. Dans ce cas il n’est
+pas nécessaire de préciser une année pour
+<code>denom_externe_annee</code> un niveaux de géographie
+<code>denom_externe_geo</code> (dans cette situation ce sont les
+populations annnuelles de l’ensemble du Québec qui servent comme
+dénominateurs).</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>agr_ext<span class="ot">&lt;-</span><span class="fu">agregation</span>(<span class="at">donnees =</span> donnees_sim , </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>                <span class="at">unite =</span> <span class="st">&quot;annee&quot;</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>                <span class="at">age =</span> <span class="st">&quot;age&quot;</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                <span class="at">age_cat_mins =</span> <span class="fu">c</span>(<span class="dv">18</span>,<span class="dv">65</span>,<span class="dv">85</span>),</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">sexe=</span><span class="st">&quot;sexe&quot;</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                <span class="at">type_num =</span> <span class="st">&quot;filtré&quot;</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                <span class="at">num_filtre_expression =</span> <span class="st">&quot;deces == &#39;Oui&#39; &quot;</span>,</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>                <span class="at">type_denom =</span> <span class="st">&quot;externe&quot;</span>,</span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                <span class="at">denom_externe_type_unite =</span> <span class="st">&quot;Annuel&quot;</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in agregation(donnees = donnees_sim, unite = &quot;annee&quot;, age = &quot;age&quot;, : impossible de trouver la fonction &quot;agregation&quot;</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(agr_ext)</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in print(agr_ext): objet &#39;agr_ext&#39; introuvable</span></span></code></pre></div>
+<p><br />
+Maintenant nous poursuivons avec une standardisation externe de ces
+données. Cette fois il faut préciser une année pour
+<code>ref_externe_annee</code> car il n’y a qu’une seule année qui sert
+comme référence. La valeur “99” pour <code>ref_externe_code</code>
+précise que c’est l’ensemble du Québec qui sert comme référence
+(d’autres valeurs sont permises si on veut une région particulière comme
+référence).</p>
+<p>Ici le multiplicateur est beaucoup plus grand pour permettre des taux
+plus facile à interpreter. Finalement, notez qu’on doit encore préciser
+les valeurs de <code>age_cat_mins</code> et qu’elles doivent être
+identiques à celles dans l’ensemble de données.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>st_ext<span class="ot">&lt;-</span><span class="fu">standardisation_externe</span>(<span class="at">donnees =</span> agr_ext,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>                            <span class="at">unite   =</span> <span class="st">&quot;annee&quot;</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>                            <span class="at">age_cat =</span> <span class="st">&quot;AGE_CAT&quot;</span> ,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                            <span class="at">age_cat_mins =</span> <span class="fu">c</span>(<span class="dv">18</span>,<span class="dv">65</span>,<span class="dv">85</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                            <span class="at">sexe=</span><span class="st">&quot;sexe&quot;</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                            <span class="at">numerateur =</span> <span class="st">&quot;num&quot;</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>                            <span class="at">denominateur =</span> <span class="st">&quot;denom&quot;</span>,</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ref_externe_annee =</span> <span class="dv">2022</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>                            <span class="at">ref_externe_code =</span> <span class="st">&quot;99&quot;</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>                            <span class="at">multiplicateur =</span> <span class="dv">100000</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in standardisation_externe(donnees = agr_ext, unite = &quot;annee&quot;, age_cat = &quot;AGE_CAT&quot;, : impossible de trouver la fonction &quot;standardisation_externe&quot;</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>st_ext<span class="sc">$</span>Resultat</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="do">## Error in eval(expr, envir, enclos): objet &#39;st_ext&#39; introuvable</span></span></code></pre></div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
