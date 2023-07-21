@@ -1,0 +1,17 @@
+Package: standardisation
+Version: 0.1
+Date: 2023-07-04
+Title: Standardisation
+Description: Fonctions pour la standardisation et la transformation des données.
+Author: Guido Powell <guido.powell@inesss.qc.ca>
+Maintainer: Guido Powell <guido.powell@inesss.qc.ca>
+Imports:
+    tidyverse,
+    rlang,
+    PHEindicatormethods
+Suggests: knitr, rmarkdown
+VignetteBuilder: knitr
+RoxygenNote: 7.2.1
+Encoding: UTF-8
+License: GPL-3
+LazyData: true
