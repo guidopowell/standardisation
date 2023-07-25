@@ -34,8 +34,60 @@ if (!require("devtools")) {
   install.packages("devtools")
 }
 devtools::install_github("guidopowell/standardisation")
-library(standardisation)
 ```
+
+    ## vctrs     (0.6.2        -> 0.6.3       ) [CRAN]
+    ## stringi   (1.7.8        -> 1.7.12      ) [CRAN]
+    ## curl      (4.3.2        -> 5.0.1       ) [CRAN]
+    ## ps        (1.7.1        -> 1.7.5       ) [CRAN]
+    ## fastmap   (1.1.0        -> 1.1.1       ) [CRAN]
+    ## digest    (0.6.29       -> 0.6.33      ) [CRAN]
+    ## cachem    (1.0.6        -> 1.0.8       ) [CRAN]
+    ## htmltools (60f379b1e... -> 758552e58...) [GitHub]
+    ## yaml      (2.3.5        -> 2.3.7       ) [CRAN]
+    ## processx  (3.7.0        -> 3.8.2       ) [CRAN]
+    ## fs        (1.5.2        -> 1.6.3       ) [CRAN]
+    ## le package 'vctrs' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## le package 'stringi' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## le package 'curl' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## le package 'ps' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## le package 'fastmap' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## le package 'digest' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## le package 'cachem' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## le package 'yaml' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## le package 'processx' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## le package 'fs' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## 
+    ## Les packages binaires téléchargés sont dans
+    ##  C:\Users\MS083\AppData\Local\Temp\RtmpQrK88E\downloaded_packages
+    ## fastmap (1.1.0  -> 1.1.1 ) [CRAN]
+    ## digest  (0.6.29 -> 0.6.33) [CRAN]
+    ## le package 'fastmap' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## le package 'digest' a été décompressé et les sommes MD5 ont été vérifiées avec succés
+    ## 
+    ## Les packages binaires téléchargés sont dans
+    ##  C:\Users\MS083\AppData\Local\Temp\RtmpQrK88E\downloaded_packages
+    ## * checking for file 'C:\Users\MS083\AppData\Local\Temp\RtmpQrK88E\remotes782aa36b07\rstudio-htmltools-758552e/DESCRIPTION' ... OK
+    ## * preparing 'htmltools':
+    ## * checking DESCRIPTION meta-information ... OK
+    ## * cleaning src
+    ## * checking for LF line-endings in source and make files and shell scripts
+    ## * checking for empty or unneeded directories
+    ## * building 'htmltools_0.5.5.9000.tar.gz'
+    ## 
+    ## * checking for file 'C:\Users\MS083\AppData\Local\Temp\RtmpQrK88E\remotes7852f47c59\guidopowell-standardisation-0fe8fb0/DESCRIPTION' ... OK
+    ## * preparing 'standardisation':
+    ## * checking DESCRIPTION meta-information ... OK
+    ## * checking for LF line-endings in source and make files and shell scripts
+    ## * checking for empty or unneeded directories
+    ##   NB: this package now depends on R (>= 3.5.0)
+    ##   WARNING: Added dependency on R >= 3.5.0 because serialized objects in
+    ##   serialize/load version 3 cannot be read in older versions of R.
+    ##   File(s) containing such objects:
+    ##     'standardisation/data/donnees_sim.RData'
+    ##     'standardisation/data/pop_ref.RData'
+    ## * building 'standardisation_0.1.tar.gz'
+    ## 
 
 ## Description courte
 
@@ -91,7 +143,6 @@ agr<-agregation(donnees = donnees_sim %>% filter(annee == "2022"),
                    type_num = "filtré",
                    num_filtre_expression = "deces == 'Oui' ",
                    type_denom = "total interne")
-## Error in agregation(donnees = donnees_sim %>% filter(annee == "2022"), : impossible de trouver la fonction "agregation"
 ```
 
 <br>
@@ -110,7 +161,6 @@ st_i<-standardisation_interne(donnees = agr,
                             denominateur = "denom",
                             methode = "indirecte",
                             multiplicateur = 100)
-## Error in standardisation_interne(donnees = agr, unite = "rss", age_cat = "AGE_CAT", : impossible de trouver la fonction "standardisation_interne"
 ```
 
 On peut vérifier l’objet “Resultats” de la standardisation dans la liste
@@ -118,7 +168,25 @@ d’objets sortants (l’objet “Details” contient les strates d’agrégatio
 
 ``` r
 st_i$Resultat
-## Error in eval(expr, envir, enclos): objet 'st_i' introuvable
+## # A tibble: 15 × 6
+## # Groups:   unite [15]
+##    unite                              obs   exp ratio IC_bas IC_haut
+##    <chr>                            <int> <dbl> <dbl>  <dbl>   <dbl>
+##  1 01_Bas-Saint-Laurent                11  23.1 0.476  0.237   0.852
+##  2 02_Saguenay-Lac-Saint-Jean          24  23.8 1.01   0.646   1.50 
+##  3 03_Capitale-Nationale               67  53.8 1.25   0.966   1.58 
+##  4 04_Mauricie et Centre-du-Québec     49  45.4 1.08   0.799   1.43 
+##  5 05_Estrie                           42  36.7 1.14   0.825   1.55 
+##  6 06_Montréal                        130 135.  0.964  0.805   1.14 
+##  7 07_Outaouais                        40  25.6 1.56   1.12    2.13 
+##  8 08_Abitibi-Témiscamingue            25  16.0 1.56   1.01    2.30 
+##  9 09_Côte-Nord                         6  11.9 0.505  0.185   1.10 
+## 10 11_Gaspésie-Îles-de-la-Madeleine     9  10.8 0.832  0.381   1.58 
+## 11 12_Chaudière-Appalaches             31  41.9 0.739  0.502   1.05 
+## 12 13_Laval                            27  30.9 0.874  0.576   1.27 
+## 13 14_Lanaudière                       38  35.3 1.08   0.761   1.48 
+## 14 15_Laurentides                      45  52.1 0.864  0.630   1.16 
+## 15 16_Montérégie                      113 115.  0.985  0.811   1.18
 ```
 
 <br>
@@ -139,10 +207,38 @@ st_e<-standardisation_externe(donnees = agr,
                             ref_externe_annee = 2022,
                             ref_externe_code = "99",
                             multiplicateur = 100)
-## Error in standardisation_externe(donnees = agr, unite = "rss", age_cat = "AGE_CAT", : impossible de trouver la fonction "standardisation_externe"
+## Warning in standardisation_externe(donnees = agr, unite = "rss", age_cat = "AGE_CAT", : 
+## Les groupes d'âge de la population d'analyse sont assumés comme étant équivalents et dans la même ordre que ceux de la population externe de référence.
+## Sinon, veuillez modifier les valeurs de vos groupes d'âge
+## 
+##   Âge.données Âge.externe
+## 1      [0,50)      [0,50)
+## 2     [50,60)     [50,60)
+## 3     [60,70)     [60,70)
+## 4    [70,Inf)    [70,Inf)
+## Warning in standardisation_externe(donnees = agr, unite = "rss", age_cat = "AGE_CAT", : 
+## Le taux ajusté n'est pas calculé pour les unités ayant < 10 observations
 
 st_e$Resultat
-## Error in eval(expr, envir, enclos): objet 'st_e' introuvable
+## # A tibble: 15 × 7
+## # Groups:   rss [15]
+##    rss                        n   pop valeur_brute valeur_ajustee IC_bas IC_haut
+##    <chr>                  <int> <int>        <dbl>          <dbl>  <dbl>   <dbl>
+##  1 01_Bas-Saint-Laurent      11   171         6.43           1.42  0.705    2.53
+##  2 02_Saguenay-Lac-Saint…    24   188        12.8            3.60  1.89     5.91
+##  3 03_Capitale-Nationale     67   448        15.0            4.28  3.16     5.62
+##  4 04_Mauricie et Centre…    49   365        13.4            6.33  3.99     9.22
+##  5 05_Estrie                 42   318        13.2            3.56  2.57     4.81
+##  6 06_Montréal              130  1048        12.4            5.19  3.79     6.79
+##  7 07_Outaouais              40   209        19.1            6.82  4.29    10.0 
+##  8 08_Abitibi-Témiscamin…    25   122        20.5            7.49  4.61    11.4 
+##  9 09_Côte-Nord               6    97         6.19          NA    NA       NA   
+## 10 11_Gaspésie-Îles-de-l…     9    79        11.4           NA    NA       NA   
+## 11 12_Chaudière-Appalach…    31   316         9.81           3.92  2.06     6.36
+## 12 13_Laval                  27   254        10.6            5.07  2.64     8.33
+## 13 14_Lanaudière             38   300        12.7            5.26  3.37     7.68
+## 14 15_Laurentides            45   452         9.96           5.59  3.27     8.50
+## 15 16_Montérégie            113   909        12.4            4.25  3.22     5.43
 ```
 
 <br>
@@ -261,12 +357,10 @@ mêmes zones.
 ``` r
 #création de données avec zones 
 donnees_regroup <- donnees_sim %>% filter(annee == 2021)
-## Error in donnees_sim %>% filter(annee == 2021): impossible de trouver la fonction "%>%"
 donnees_regroup <- donnees_regroup %>% 
   mutate(zone=case_when(rss_code %in% c("06","13") ~ "Mtl_Laval",
                         rss_code %in% c("03","12") ~ "C.N._Ch-Ap.",
                         T ~ rss_code))
-## Error in donnees_regroup %>% mutate(zone = case_when(rss_code %in% c("06", : impossible de trouver la fonction "%>%"
 
 #agrégation avec regroupement de dénominateurs externe
 agr_avec_regroup<-agregation(donnees = donnees_regroup,
@@ -283,10 +377,38 @@ agr_avec_regroup<-agregation(donnees = donnees_regroup,
                      list("Mtl_Laval"=c("06","13"),
                           "C.N._Ch-Ap." = c("03","12"))
 )
-## Error in agregation(donnees = donnees_regroup, unite = "zone", age = "age", : impossible de trouver la fonction "agregation"
 
 print(agr_avec_regroup,n = Inf)
-## Error in print(agr_avec_regroup, n = Inf): objet 'agr_avec_regroup' introuvable
+## # A tibble: 26 × 4
+## # Groups:   zone [13]
+##    zone        AGE_CAT    denom   num
+##    <chr>       <chr>      <int> <int>
+##  1 01          [0,75)    176149     4
+##  2 01          [75,Inf)   22948     1
+##  3 02          [0,75)    251493     0
+##  4 02          [75,Inf)   28456     4
+##  5 04          [0,75)    475844     2
+##  6 04          [75,Inf)   57016     6
+##  7 05          [0,75)    456707     3
+##  8 05          [75,Inf)   49853    18
+##  9 07          [0,75)    376522     3
+## 10 07          [75,Inf)   27743     0
+## 11 08          [0,75)    135935     0
+## 12 08          [75,Inf)   12307     2
+## 13 09          [0,75)     82707     0
+## 14 09          [75,Inf)    7836     0
+## 15 11          [0,75)     81033     0
+## 16 11          [75,Inf)   11039     0
+## 17 14          [0,75)    492904     4
+## 18 14          [75,Inf)   42326    12
+## 19 15          [0,75)    595707     6
+## 20 15          [75,Inf)   51472     3
+## 21 16          [0,75)   1330839     9
+## 22 16          [75,Inf)  122731    21
+## 23 C.N._Ch-Ap. [0,75)   1081656    18
+## 24 C.N._Ch-Ap. [75,Inf)  117479    18
+## 25 Mtl_Laval   [0,75)   2266941    39
+## 26 Mtl_Laval   [75,Inf)  202172    57
 ```
 
 <br>
@@ -319,7 +441,6 @@ st_i<-standardisation_interne(donnees = agr,
                             reference_unite = "06_Montréal",
                             methode = "indirecte",
                             multiplicateur = 100)
-## Error in standardisation_interne(donnees = agr, unite = "rss", age_cat = "AGE_CAT", : impossible de trouver la fonction "standardisation_interne"
 ```
 
 Dans l’élement “Resultats” on contate que le ratio pour Montréal est de
@@ -328,7 +449,25 @@ donné que c’est la référence.
 
 ``` r
 st_i$Resultat
-## Error in eval(expr, envir, enclos): objet 'st_i' introuvable
+## # A tibble: 15 × 6
+## # Groups:   unite [15]
+##    unite                              obs   exp ratio IC_bas IC_haut
+##    <chr>                            <int> <dbl> <dbl>  <dbl>   <dbl>
+##  1 01_Bas-Saint-Laurent                11  22.6 0.487  0.243   0.872
+##  2 02_Saguenay-Lac-Saint-Jean          24  22.8 1.05   0.673   1.56 
+##  3 03_Capitale-Nationale               67  52.9 1.27   0.981   1.61 
+##  4 04_Mauricie et Centre-du-Québec     49  44.3 1.11   0.818   1.46 
+##  5 05_Estrie                           42  36.2 1.16   0.836   1.57 
+##  6 06_Montréal                        130 130   1      0.835   1.19 
+##  7 07_Outaouais                        40  24.4 1.64   1.17    2.23 
+##  8 08_Abitibi-Témiscamingue            25  15.8 1.59   1.03    2.34 
+##  9 09_Côte-Nord                         6  11.4 0.528  0.194   1.15 
+## 10 11_Gaspésie-Îles-de-la-Madeleine     9  10.4 0.863  0.395   1.64 
+## 11 12_Chaudière-Appalaches             31  40.6 0.764  0.519   1.08 
+## 12 13_Laval                            27  30.1 0.898  0.592   1.31 
+## 13 14_Lanaudière                       38  34.9 1.09   0.771   1.50 
+## 14 15_Laurentides                      45  51.0 0.882  0.643   1.18 
+## 15 16_Montérégie                      113 111.  1.02   0.837   1.22
 ```
 
 <br>
@@ -382,10 +521,30 @@ agr_ext<-agregation(donnees = donnees_sim ,
                 num_filtre_expression = "deces == 'Oui' ",
                 type_denom = "externe",
                 denom_externe_type_unite = "Annuel")
-## Error in agregation(donnees = donnees_sim, unite = "annee", age = "age", : impossible de trouver la fonction "agregation"
 
 print(agr_ext)
-## Error in print(agr_ext): objet 'agr_ext' introuvable
+## # A tibble: 18 × 5
+## # Groups:   annee, AGE_CAT [9]
+##    annee AGE_CAT  sexe     denom   num
+##    <chr> <chr>    <chr>    <int> <int>
+##  1 2020  [18,65)  F     10387056    14
+##  2 2020  [18,65)  M     10742692    11
+##  3 2020  [65,85)  F      3089952    91
+##  4 2020  [65,85)  M      2836976    81
+##  5 2020  [85,Inf) F       541040    76
+##  6 2020  [85,Inf) M       298756    76
+##  7 2021  [18,65)  F     10320536    19
+##  8 2021  [18,65)  M     10690080    11
+##  9 2021  [65,85)  F      3194620    67
+## 10 2021  [65,85)  M      2942688    52
+## 11 2021  [85,Inf) F       552872    38
+## 12 2021  [85,Inf) M       311364    43
+## 13 2022  [18,65)  F     10329444    34
+## 14 2022  [18,65)  M     10720624    21
+## 15 2022  [65,85)  F      3307856   163
+## 16 2022  [65,85)  M      3055536   161
+## 17 2022  [85,Inf) F       561172   134
+## 18 2022  [85,Inf) M       323044   144
 ```
 
 Maintenant nous poursuivons avec une standardisation externe de ces
@@ -411,8 +570,21 @@ st_ext<-standardisation_externe(donnees = agr_ext,
                             ref_externe_annee = 2022,
                             ref_externe_code = "99",
                             multiplicateur = 100000)
-## Error in standardisation_externe(donnees = agr_ext, unite = "annee", age_cat = "AGE_CAT", : impossible de trouver la fonction "standardisation_externe"
+## Warning in standardisation_externe(donnees = agr_ext, unite = "annee", age_cat = "AGE_CAT", : 
+## Les groupes d'âge de la population d'analyse sont assumés comme étant équivalents et dans la même ordre que ceux de la population externe de référence.
+## Sinon, veuillez modifier les valeurs de vos groupes d'âge
+## 
+##   Âge.données Âge.externe
+## 1     [18,65)     [18,65)
+## 2     [65,85)     [65,85)
+## 3    [85,Inf)    [85,Inf)
 
 st_ext$Resultat
-## Error in eval(expr, envir, enclos): objet 'st_ext' introuvable
+## # A tibble: 3 × 7
+## # Groups:   annee [3]
+##   annee     n      pop valeur_brute valeur_ajustee IC_bas IC_haut
+##   <chr> <int>    <int>        <dbl>          <dbl>  <dbl>   <dbl>
+## 1 2020    349 27896472        1.25           1.31   1.18    1.45 
+## 2 2021    230 28012160        0.821          0.836  0.732   0.951
+## 3 2022    657 28297676        2.32           2.32   2.15    2.51
 ```
