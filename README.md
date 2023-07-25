@@ -36,58 +36,7 @@ if (!require("devtools")) {
 devtools::install_github("guidopowell/standardisation")
 ```
 
-    ## vctrs     (0.6.2        -> 0.6.3       ) [CRAN]
-    ## stringi   (1.7.8        -> 1.7.12      ) [CRAN]
-    ## curl      (4.3.2        -> 5.0.1       ) [CRAN]
-    ## ps        (1.7.1        -> 1.7.5       ) [CRAN]
-    ## fastmap   (1.1.0        -> 1.1.1       ) [CRAN]
-    ## digest    (0.6.29       -> 0.6.33      ) [CRAN]
-    ## cachem    (1.0.6        -> 1.0.8       ) [CRAN]
-    ## htmltools (60f379b1e... -> 758552e58...) [GitHub]
-    ## yaml      (2.3.5        -> 2.3.7       ) [CRAN]
-    ## processx  (3.7.0        -> 3.8.2       ) [CRAN]
-    ## fs        (1.5.2        -> 1.6.3       ) [CRAN]
-    ## le package 'vctrs' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## le package 'stringi' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## le package 'curl' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## le package 'ps' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## le package 'fastmap' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## le package 'digest' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## le package 'cachem' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## le package 'yaml' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## le package 'processx' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## le package 'fs' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## 
-    ## Les packages binaires téléchargés sont dans
-    ##  C:\Users\MS083\AppData\Local\Temp\RtmpQrK88E\downloaded_packages
-    ## fastmap (1.1.0  -> 1.1.1 ) [CRAN]
-    ## digest  (0.6.29 -> 0.6.33) [CRAN]
-    ## le package 'fastmap' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## le package 'digest' a été décompressé et les sommes MD5 ont été vérifiées avec succés
-    ## 
-    ## Les packages binaires téléchargés sont dans
-    ##  C:\Users\MS083\AppData\Local\Temp\RtmpQrK88E\downloaded_packages
-    ## * checking for file 'C:\Users\MS083\AppData\Local\Temp\RtmpQrK88E\remotes782aa36b07\rstudio-htmltools-758552e/DESCRIPTION' ... OK
-    ## * preparing 'htmltools':
-    ## * checking DESCRIPTION meta-information ... OK
-    ## * cleaning src
-    ## * checking for LF line-endings in source and make files and shell scripts
-    ## * checking for empty or unneeded directories
-    ## * building 'htmltools_0.5.5.9000.tar.gz'
-    ## 
-    ## * checking for file 'C:\Users\MS083\AppData\Local\Temp\RtmpQrK88E\remotes7852f47c59\guidopowell-standardisation-0fe8fb0/DESCRIPTION' ... OK
-    ## * preparing 'standardisation':
-    ## * checking DESCRIPTION meta-information ... OK
-    ## * checking for LF line-endings in source and make files and shell scripts
-    ## * checking for empty or unneeded directories
-    ##   NB: this package now depends on R (>= 3.5.0)
-    ##   WARNING: Added dependency on R >= 3.5.0 because serialized objects in
-    ##   serialize/load version 3 cannot be read in older versions of R.
-    ##   File(s) containing such objects:
-    ##     'standardisation/data/donnees_sim.RData'
-    ##     'standardisation/data/pop_ref.RData'
-    ## * building 'standardisation_0.1.tar.gz'
-    ## 
+  
 
 ## Description courte
 
