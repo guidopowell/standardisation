@@ -21,7 +21,7 @@ library(tidyverse)
 
 # Introduction
 
-Le package **standardisation** comprend un ensemble de fonctions conçues pour la standardisation et la transformation des données. Ce package se concentre principalement sur la standardisation des données basée par groupes d'âge, le sexe et autres variables fournis, en utilisant soit une population de référence interne, soit externe. De plus, la fonction agregation permet de convertir les données individuelles ou partiellement agrégées en un format propice à la standardisation.
+Le package **standardisation** comprend un ensemble de fonctions conçues pour la standardisation et la transformation des données. La standardisation permet des comparaisons plus fiables entre différentes populations en ajustant les taux de maladie, de mortalité ou d'autres indicateurs en tenant compte des différences d'âge, de sexe, ou d'autre variables. Ce package permet la standardisation en ajustant par une population de référence soit interne, soit externe. De plus, la fonction agregation permet de convertir les données individuelles ou partiellement agrégées en un format propice à la standardisation.
 
 <br>
 
@@ -29,7 +29,7 @@ Le package **standardisation** comprend un ensemble de fonctions conçues pour l
 
 Pour installer à partir de github il faut avoir installé le package devtools.
 
-```{r echo=T, message= F, warning=F}
+```{r echo=T, eval=F,results='hide', message= F, warning=F}
 if (!require("devtools")) {
   install.packages("devtools")
 }
@@ -140,19 +140,19 @@ Il y a trois façons d'identifier les numérateurs dans un ensemble de données 
 1.  `type_num = "filtré"` : Une expression logique est spécifié pour identifier quelles lignes dans un ensemble de données individuelles doivent être comptées. Cette option nécessite l'argument `num_filtre_expression` (par exemple, `num_filtre_expression  = "hospitalisation == TRUE"` ).
 
 ```{r, out.width = "20%", fig.align="center", fig.border = "none", echo=FALSE}
-knitr::include_graphics("image_num_filtre.PNG")
+knitr::include_graphics("vignettes/image_num_filtre.PNG")
 ```
 
 2.  `type_num = "total interne"` : L'ensemble de données individuelles fourni est compté comme numérateur. Par exemple dans un cas où une extraction de données ne représente que les patients à analyser. 
 
 ```{r, out.width = "20%", fig.align="center", fig.border = "none", echo=FALSE}
-knitr::include_graphics("image_num_total.PNG")
+knitr::include_graphics("vignettes/image_num_total.PNG")
 ```
 
 3.  `type_num = "colonne agrégée"` : Les données sont partiellement agrégées et une colonne spécifie les décomptes des numérateurs. Cette option nécessite l'argument `numerateur_agr_col.`
 
 ```{r, out.width = "20%", fig.align="center", fig.border = "none", echo=FALSE}
-knitr::include_graphics("image_num_col.PNG")
+knitr::include_graphics("vignettes/image_num_col.PNG")
 ```
 
 <br>
@@ -164,20 +164,20 @@ De même, il y a trois façons d'obtenir les dénominateurs :
 1.  `type_denom = "total_interne"` : L'ensemble de données individuelles fourni est compté comme dénominateur.
 
 ```{r, out.width = "20%", fig.align="center", fig.border = "none", echo=FALSE}
-knitr::include_graphics("image_denom_total.PNG")
+knitr::include_graphics("vignettes/image_denom_total.PNG")
 ```
 
 
 2.  `type_denom = "externe"` : Un ensemble de données de population externe agrégé , le fichier `pop_ref`, est utilisé comme dénominateurs. Cette option nécessite l'argument `denom_externe_type_unite`. Si ce dernier est "Régional" (au lieu de "Annuel"), il faut préciser une valeur pour `denom_externe_annee` et `denom_externe_geo`. Un dernier argument facultatif est `denom_externe_regroupement_unite` (voir plus bas).
 
 ```{r, out.width = "20%", fig.align="center", fig.border = "none", echo=FALSE}
-knitr::include_graphics("image_denom_ext.PNG")
+knitr::include_graphics("vignettes/image_denom_ext.PNG")
 ```
 
 3.  `type_denom = "colonne_agrégée"` : Les données sont partiellement agrégées et une colonne spécifie les décomptes des dénominateurs. Cette option nécessite l'argument `denominateur_agr_col.`
 
 ```{r, out.width = "20%", fig.align="center", fig.border = "none", echo=FALSE}
-knitr::include_graphics("image_denom_col.PNG")
+knitr::include_graphics("vignettes/image_denom_col.PNG")
 ```
 
 <br>
@@ -193,7 +193,7 @@ Toutes les combinaisons de `type_num` et `type_denom` ne sont pas autorisées. L
 -   `type_num = "colonne agrégée"` peut être associé avec `type_denom = "colonne_agrégée"` ou `type_denom = "externe"`.
 
 ```{r, out.width = "90%", fig.align="center", fig.border = "none", echo=FALSE}
-knitr::include_graphics("image.PNG")
+knitr::include_graphics("vignettes/image.PNG")
 ```
 
 <br>

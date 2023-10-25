@@ -1,24 +1,26 @@
 standardisation
 ================
 
--   [Introduction](#introduction)
-    -   [Installation](#installation)
-    -   [Description courte](#description-courte)
-    -   [Exemples d’utilisation](#exemples-dutilisation)
--   [Description détaillée](#description-détaillée)
-    -   [`agregation`](#agregation)
-        -   [Regroupement d’âge](#regroupement-dâge)
-        -   [Structure des données](#structure-des-données)
-    -   [`standardisation_interne`](#standardisation_interne)
-    -   [`standardisation_externe`](#standardisation_externe)
+- [Introduction](#introduction)
+  - [Installation](#installation)
+  - [Description courte](#description-courte)
+  - [Exemples d’utilisation](#exemples-dutilisation)
+- [Description détaillée](#description-détaillée)
+  - [`agregation`](#agregation)
+    - [Regroupement d’âge](#regroupement-dâge)
+    - [Structure des données](#structure-des-données)
+  - [`standardisation_interne`](#standardisation_interne)
+  - [`standardisation_externe`](#standardisation_externe)
 
 # Introduction
 
 Le package **standardisation** comprend un ensemble de fonctions conçues
-pour la standardisation et la transformation des données. Ce package se
-concentre principalement sur la standardisation des données basée par
-groupes d’âge, le sexe et autres variables fournis, en utilisant soit
-une population de référence interne, soit externe. De plus, la fonction
+pour la standardisation et la transformation des données. La
+standardisation permet des comparaisons plus fiables entre différentes
+populations en ajustant les taux de maladie, de mortalité ou d’autres
+indicateurs en tenant compte des différences d’âge, de sexe, ou d’autre
+variables. Ce package permet la standardisation en ajustant par une
+population de référence soit interne, soit externe. De plus, la fonction
 agregation permet de convertir les données individuelles ou
 partiellement agrégées en un format propice à la standardisation.
 
@@ -114,6 +116,7 @@ On peut vérifier l’objet “Resultats” de la standardisation dans la liste
 d’objets sortants (l’objet “Details” contient les strates d’agrégation)
 
 ``` r
+
 st_i$Resultat
 ## # A tibble: 15 × 6
 ## # Groups:   unite [15]
@@ -145,6 +148,7 @@ pour ref_externe_code fait référence au niveau géographique de
 l’ensemble du Québec.
 
 ``` r
+
 st_e<-standardisation_externe(donnees = agr,
                             unite   = "rss",
                             age_cat = "AGE_CAT" ,
@@ -236,21 +240,19 @@ données :
     `num_filtre_expression` (par exemple,
     `num_filtre_expression  = "hospitalisation == TRUE"` ).
 
-<!-- -->
-
-    ## Error in knitr::include_graphics("image_num_filtre.PNG"): Cannot find the file(s): "image_num_filtre.PNG"
+<img src="vignettes/image_num_filtre.PNG" width="20%" style="display: block; margin: auto;" />
 
 2.  `type_num = "total interne"` : L’ensemble de données individuelles
     fourni est compté comme numérateur. Par exemple dans un cas où une
     extraction de données ne représente que les patients à analyser.
 
-<img src="image_num_total.PNG" width="20%" style="display: block; margin: auto;" />
+<img src="vignettes/image_num_total.PNG" width="20%" style="display: block; margin: auto;" />
 
 3.  `type_num = "colonne agrégée"` : Les données sont partiellement
     agrégées et une colonne spécifie les décomptes des numérateurs.
     Cette option nécessite l’argument `numerateur_agr_col.`
 
-<img src="image_num_col.PNG" width="20%" style="display: block; margin: auto;" />
+<img src="vignettes/image_num_col.PNG" width="20%" style="display: block; margin: auto;" />
 
 <br>
 
@@ -261,7 +263,7 @@ De même, il y a trois façons d’obtenir les dénominateurs :
 1.  `type_denom = "total_interne"` : L’ensemble de données individuelles
     fourni est compté comme dénominateur.
 
-<img src="image_denom_total.PNG" width="20%" style="display: block; margin: auto;" />
+<img src="vignettes/image_denom_total.PNG" width="20%" style="display: block; margin: auto;" />
 
 2.  `type_denom = "externe"` : Un ensemble de données de population
     externe agrégé , le fichier `pop_ref`, est utilisé comme
@@ -271,13 +273,13 @@ De même, il y a trois façons d’obtenir les dénominateurs :
     `denom_externe_geo`. Un dernier argument facultatif est
     `denom_externe_regroupement_unite` (voir plus bas).
 
-<img src="image_denom_ext.PNG" width="20%" style="display: block; margin: auto;" />
+<img src="vignettes/image_denom_ext.PNG" width="20%" style="display: block; margin: auto;" />
 
 3.  `type_denom = "colonne_agrégée"` : Les données sont partiellement
     agrégées et une colonne spécifie les décomptes des dénominateurs.
     Cette option nécessite l’argument `denominateur_agr_col.`
 
-<img src="image_denom_col.PNG" width="20%" style="display: block; margin: auto;" />
+<img src="vignettes/image_denom_col.PNG" width="20%" style="display: block; margin: auto;" />
 
 <br>
 
@@ -286,16 +288,16 @@ De même, il y a trois façons d’obtenir les dénominateurs :
 Toutes les combinaisons de `type_num` et `type_denom` ne sont pas
 autorisées. Les combinaisons autorisées sont les suivantes :
 
--   `type_num = "filtré"` peut être associé avec
-    `type_denom = "total_interne"` ou `type_denom = "externe"`.
+- `type_num = "filtré"` peut être associé avec
+  `type_denom = "total_interne"` ou `type_denom = "externe"`.
 
--   `type_num = "total_interne"` ne peut être utilisé qu’avec
-    `type_denom = "externe"`.
+- `type_num = "total_interne"` ne peut être utilisé qu’avec
+  `type_denom = "externe"`.
 
--   `type_num = "colonne agrégée"` peut être associé avec
-    `type_denom = "colonne_agrégée"` ou `type_denom = "externe"`.
+- `type_num = "colonne agrégée"` peut être associé avec
+  `type_denom = "colonne_agrégée"` ou `type_denom = "externe"`.
 
-<img src="image.PNG" width="90%" style="display: block; margin: auto;" />
+<img src="vignettes/image.PNG" width="90%" style="display: block; margin: auto;" />
 
 <br>
 
@@ -410,6 +412,7 @@ Dans l’élement “Resultats” on contate que le ratio pour Montréal est de
 donné que c’est la référence.
 
 ``` r
+
 st_i$Resultat
 ## # A tibble: 15 × 6
 ## # Groups:   unite [15]
@@ -446,22 +449,22 @@ que seulement l’ajustement par âge et sexe est possible dans la
 standardisation externe car les taux de référence ne sont pas
 disponibles pour d’autres variables.
 
--   `age_cat_mins` doit préciser quels groupes d’âges sont représentés
-    dans la variable `age` pour permettre la même catégorisation de la
-    variable d’âge des données externes
+- `age_cat_mins` doit préciser quels groupes d’âges sont représentés
+  dans la variable `age` pour permettre la même catégorisation de la
+  variable d’âge des données externes
 
--   `age_filtre_max` est facultatif, mais il doit être précisé si les
-    données d’analyse ont un âge maximum.
+- `age_filtre_max` est facultatif, mais il doit être précisé si les
+  données d’analyse ont un âge maximum.
 
--   `ref_externe_annee` . Le fichier `pop_ref` contient des données de
-    population datant de 1996 jusqu’à 2041 (projections). Il faut
-    sélectionner une année comme référence.
+- `ref_externe_annee` . Le fichier `pop_ref` contient des données de
+  population datant de 1996 jusqu’à 2041 (projections). Il faut
+  sélectionner une année comme référence.
 
--   `ref_externe_code`. Le fichier `pop_ref` contient des données pour
-    l’ensemble du Québec, ou par différents niveaux géographiques (RSS,
-    RLS, RTS). Le code “99” sert à sélectionner l’ensemble du Québec
-    comme référence. Les codes de RSS sont une chaînes de 2 caractères,
-    les RTS sont de 3 caractères, et les RLS sont de 4 caractères.
+- `ref_externe_code`. Le fichier `pop_ref` contient des données pour
+  l’ensemble du Québec, ou par différents niveaux géographiques (RSS,
+  RLS, RTS). Le code “99” sert à sélectionner l’ensemble du Québec comme
+  référence. Les codes de RSS sont une chaînes de 2 caractères, les RTS
+  sont de 3 caractères, et les RLS sont de 4 caractères.
 
 Le prochain exemple démontre un scénario où on veut comparer des années,
 en ajustant avec une année de référence externe. Pour ce faire nous
@@ -477,6 +480,7 @@ populations annnuelles de l’ensemble du Québec qui servent comme
 dénominateurs).
 
 ``` r
+
 agr_ext<-agregation(donnees = donnees_sim , 
                 unite = "annee",
                 age = "age",
@@ -525,6 +529,7 @@ les valeurs de `age_cat_mins` et qu’elles doivent être identiques à
 celles dans l’ensemble de données.
 
 ``` r
+
 st_ext<-standardisation_externe(donnees = agr_ext,
                             unite   = "annee",
                             age_cat = "AGE_CAT" ,

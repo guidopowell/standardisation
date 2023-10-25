@@ -15,7 +15,7 @@ agregation(
   autres_vars = NULL,
   type_num,
   type_denom,
-  num_filtre_expression,
+  num_filtre_expression = NULL,
   numerateur_agr_col = NULL,
   denominateur_agr_col = NULL,
   denom_externe_type_unite = NULL,
