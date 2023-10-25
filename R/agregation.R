@@ -55,7 +55,7 @@ agregation<- function(donnees,
                       type_num,
                       type_denom,
                       
-                      num_filtre_expression,
+                      num_filtre_expression=NULL,
                       
                       numerateur_agr_col=NULL, 
                       denominateur_agr_col=NULL,
@@ -197,19 +197,19 @@ agregation<- function(donnees,
         # Vérifier les codes RSS
         if (denom_externe_geo == "RSS" & (any(nchar(donnees$unite) != 2) |
                                           !all(donnees$unite %in% pop_ref$code[pop_ref$geo == "RSS"]))) {
-          stop("\nLes codes RSS doivent être un caractère de 2 chiffres, exemples '06','16', etc. Consultez le tableau pop_ref pour connaître les valeurs admissibles.")
+          stop("\nLes codes RSS doivent être un caractère de 2 chiffres dont un '0' pour les codes < '10', exemples '06','16', etc. Consultez le tableau pop_ref pour connaître les valeurs admissibles.")
         }
         
         # Vérifier les codes RLS
         if (denom_externe_geo == "RLS" & (any(nchar(donnees$unite) != 4) |
                                           !all(donnees$unite %in% pop_ref$code[pop_ref$geo == "RLS"]))) {
-          stop("\nLes codes RLS doivent être un caractère de 4 chiffres, exemples '0111', '0815', '1112' etc. Consultez le tableau pop_ref pour connaître les valeurs admissibles.")
+          stop("\nLes codes RLS doivent être un caractère de 4 chiffres dont un '0' pour les codes < '1000', exemples '0111', '0815', '1112' etc. Consultez le tableau pop_ref pour connaître les valeurs admissibles.")
         }
         
         # Vérifier les codes RTS
         if (denom_externe_geo == "RTS" & (any(nchar(donnees$unite) != 3) |
                                           !all(donnees$unite %in% pop_ref$code[pop_ref$geo == "RTS"]))) {
-          stop("\nLes codes RTS doivent être un caractère de 3 chiffres, exemples '021', '065', '161' etc. Consultez le tableau pop_ref pour connaître les valeurs admissibles.")
+          stop("\nLes codes RTS doivent être un caractère de 3 chiffres dont un '0' pour les codes < '100', exemples '021', '065', '161' etc. Consultez le tableau pop_ref pour connaître les valeurs admissibles.")
         }
         
       }
@@ -418,7 +418,7 @@ agregation<- function(donnees,
   #
   verif_n<-denom_group %>% ungroup %>% expand(!!!syms(vars)) %>% anti_join(denom_group) %>%suppressMessages() %>% as.data.frame()
   
-  if(nrow(verif_n)!=0) stop("\nStrate(s) d'agrégation manquante(s). Veuillez créer des catégories d'âges plus larges ou considérer enlever l'ajustement par sexe ou atres variables \n\n",
+  if(nrow(verif_n)!=0) stop("\nStrate(s) d'agrégation manquante(s). Veuillez créer des catégories d'âges plus larges, considérer enlever l'ajustement par sexe ou atres variables, ou exclure des unités (régions ou années) trop petites. \n\n",
                             paste(capture.output(print(verif_n)),collapse="\n"),"\n")
   
   
