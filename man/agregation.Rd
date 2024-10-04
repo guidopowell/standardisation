@@ -25,7 +25,7 @@ agregation(
 )
 }
 \arguments{
-\item{donnees}{Un dataframe contenant les données à agréger.}
+\item{donnees}{Un dataframe contenant les données à agréger. Les valeurs NA ne sont pas permises.}
 
 \item{age}{Un champ dans le dataframe qui indique l'âge du patient en format continu à regrouper par `age_cat_mins`.}
 

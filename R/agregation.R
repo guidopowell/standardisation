@@ -2,7 +2,7 @@
 #'
 #' @description  `agregation` est une fonction qui permet de transformer des données individuelles ou partiellement agrégées en un format adapté pour les fonctions de standardisation\cr
 #'
-#' @param donnees Un dataframe contenant les données à agréger.
+#' @param donnees Un dataframe contenant les données à agréger. Les valeurs NA ne sont pas permises.
 #' @param age Un champ dans le dataframe qui indique l'âge du patient en format continu à regrouper par `age_cat_mins`.
 #' @param age_cat_mins Un vecteur contenant les âges minimaux de chaque groupe d'âge pour le regroupement de `age` et/ou de la variable d'âge du tableau externe de dénominateur.
 #' @param age_filtre_max  Une valeur numérique indiquant le filtre d'âge maximum exclusif, Inf par défaut.
@@ -68,7 +68,7 @@ agregation<- function(donnees,
   
   
   options(dplyr.summarise.inform = FALSE)
-
+  
   
   #-----------------------------------------------#
   #-----------------------------------------------#  
@@ -82,16 +82,23 @@ agregation<- function(donnees,
   #assigner les colonnes
   if(is.null(unite)){stop("L'argument `unite` ne peut pas être NULL")
   }else if(!unite %in% colnames(donnees)){stop(paste0("\nLa colonne ",unite," n'est pas retrouvée dans le tableau de données"))
+  }else if(any(is.na(donnees[[unite]]))){stop(paste0("\nLa colonne ",unite," ne doit pas contenir de valeurs NA."))
   }else{donnees$unite<-donnees[[unite]]}
   
   if(is.null(age)){stop("L'argument `age` ne peut pas être NULL")
   }else if(!age %in% colnames(donnees)){stop(paste0("\nLa colonne ",age," n'est pas retrouvée dans le tableau de données"))
+  }else if(any(is.na(donnees[[age]]))){stop(paste0("\nLa colonne ",age," ne doit pas contenir de valeurs NA."))
   }else{donnees$age<-donnees[[age]]}
   
-  if(!is.null(age_cat_mins) & !is.null(age_filtre_max) & max(age_cat_mins)>=age_filtre_max){stop("\nLa valeur de 'age_filtre_max' ne doit pas être plus petite ou égale à la valeur maximale de 'age_cat_mins'.")}
+  if(!is.null(age_cat_mins)) {
+    if(!is.null(age_filtre_max)){
+      if( max(age_cat_mins)>=age_filtre_max){stop("\nLa valeur de 'age_filtre_max' ne doit pas être plus petite ou égale à la valeur maximale de 'age_cat_mins'.")}
+    }
+  }
   
   if(!is.null(sexe)){
     if(!sexe %in% colnames(donnees)){stop(paste0("\nLa colonne ",sexe," n'est pas retrouvée dans le tableau de données"))
+    }else if(any(is.na(donnees[[sexe]]))){stop(paste0("\nLa colonne ",sexe," ne doit pas contenir de valeurs NA."))
     }else{donnees$sexe<-donnees[[sexe]]}
   }
   
@@ -107,8 +114,9 @@ agregation<- function(donnees,
   if(!is.null(numerateur_agr_col)){
     if(type_num!="colonne agrégée"){stop("\nVous ne pouvez pas spécifier une valeur pour 'numerateur_agr_col' si le type `type_num` n'est pas 'colonne agrégée' ." )}
     if(!numerateur_agr_col %in% colnames(donnees)){stop(paste0("\nLa colonne ",numerateur_agr_col," n'est pas retrouvée dans le tableau de données"))
+    }else if(any(is.na(donnees[[numerateur_agr_col]]))){stop(paste0("\nLa colonne ",numerateur_agr_col," ne doit pas contenir de valeurs NA."))
     }else{donnees$numerateur_agr_col<-donnees[[numerateur_agr_col]]}
-  }
+  } 
   
   
   if(type_num=="total interne" & type_denom!="externe"){
@@ -128,6 +136,13 @@ agregation<- function(donnees,
     }, error = function(e) {
       stop("L'expresion num_filtre_expression' a produit une erreur. Assurez d'avoir bien précisé une colonne dans les données, qu'elle est évaluée par un opérateur logique valide, et que la valeur est entourée d'apostrophes (' ') si elle est un caractère  . \n\nPar exemple,\n \"deces == 'Oui'\" ; \n \"n_Médicament  > 0\" ;\n \"HOSPIT %in% c('admis','transfer')\" ; \n \"naissance == TRUE & poids_lbs < 5\"   ")
     })
+    
+    # #aucune valeur NA
+    # evaluated_expression <- with(donnees, eval(parse(text = num_filtre_expression)))
+    # 
+    # if(any(is.na(evaluated_expression))) {
+    #   stop("Les variables précisées dans `num_filtre_expression` ne doivent pas contenir de valeurs NA.")
+    # }
   }
   
   if(!is.null(num_filtre_expression) & type_num != "filtré"){stop("\nL'argument `num_filtre_expression` doit seulemet être spécifié lorsque `type_num` = 'filtré'")}
@@ -140,6 +155,7 @@ agregation<- function(donnees,
   if(!is.null(denominateur_agr_col)){
     if(type_denom != "colonne agrégée"){stop("\nVous ne pouvez pas spécifier une valeur pour 'denominateur_agr_col' si le type `type_denom` n'est pas 'colonne agrégée' .")}
     if(!denominateur_agr_col %in% colnames(donnees)){stop(paste0("\nLa colonne ",denominateur_agr_col," n'est pas retrouvée dans le tableau de données"))
+    }else if(any(is.na(donnees[[denominateur_agr_col]]))){stop(paste0("\nLa colonne ",denominateur_agr_col," ne doit pas contenir de valeurs NA."))
     }else{donnees$denominateur_agr_col<-donnees[[denominateur_agr_col]]}
   }
   
@@ -179,7 +195,7 @@ agregation<- function(donnees,
     
     if(is.null(denom_externe_type_unite) || !denom_externe_type_unite %in% c("Régional", "Annuel")){stop("\nL'argument 'denom_externe_type_unite' doit avoir comme valeur 'Régional' ou 'Annuel' ")}
     
-   
+    
     # Si denom_externe_type_unite est "Régional", vérifier les conditions pour type_denom == "externe"_annee et les codes d'unité
     if (denom_externe_type_unite == "Régional") {
       
@@ -284,7 +300,7 @@ agregation<- function(donnees,
     # Si une population externe est utilisée et "age_cat_mins" est fourni, ajuster les groupes d'âge
     if ( type_denom == "externe") {
       
-      if (is.null(age_cat_mins)) stop("\nL'argument `age_cat_mins` ne doit pas être NULL lorsque `reference_somme` = 'externe' ou `denom_externe` = T")
+      if (is.null(age_cat_mins)) stop("\nL'argument `age_cat_mins` ne doit pas être NULL lorsque `type_denom` = 'externe' ou `denom_externe` = T")
       
       if (length(unique(donnees$AGE_CAT)) != length(age_cat_mins)) {
         stop("\nLe nombre de groupes d'âges de la population d'analyse diffère de celui de la population externe.
@@ -318,11 +334,7 @@ agregation<- function(donnees,
     }}
   
   
-  #-----------------------------------------------#
-  #-----------------------------------------------#
-  ################# TAUX BRUTS ####################
-  #-----------------------------------------------#
-  #-----------------------------------------------#
+  
   
   # Enlever les lignes avec une valeur manquante pour la variable portant sur les régions.
   donnees <- drop_na(donnees, any_of(vars))
@@ -416,7 +428,7 @@ agregation<- function(donnees,
   
   
   #
-  verif_n<-denom_group %>% ungroup %>% expand(!!!syms(vars)) %>% anti_join(denom_group) %>%suppressMessages() %>% as.data.frame()
+  verif_n<-denom_group %>% droplevels %>%  ungroup %>% expand(!!!syms(vars)) %>% anti_join(denom_group) %>%suppressMessages() %>% as.data.frame()
   
   if(nrow(verif_n)!=0) stop("\nStrate(s) d'agrégation manquante(s). Veuillez créer des catégories d'âges plus larges, considérer enlever l'ajustement par sexe ou atres variables, ou exclure des unités (régions ou années) trop petites. \n\n",
                             paste(capture.output(print(verif_n)),collapse="\n"),"\n")
@@ -440,18 +452,25 @@ agregation<- function(donnees,
   ##################### JOIN ######################
   #-----------------------------------------------#
   #-----------------------------------------------#
-  num_agg<-
+  agg<-
     denom_group %>%
     left_join(num_group) %>%
     suppressMessages() %>%
     mutate(num=replace_na(num,0))
   
   #Réassigner les noms de colonnes originaux
-  colnames(num_agg)[1]<-{{unite}}
-  if(!is.null(sexe))colnames(num_agg)[3]<-{{sexe}}
+  colnames(agg)[1]<-{{unite}}
+  if(!is.null(sexe))colnames(agg)[3]<-{{sexe}}
   
   
-  return(num_agg)
+  structure(list("df"=agg,
+                 "unite"=unite,
+                 "age_cat_mins"=age_cat_mins,
+                 "age_filtre_max"=age_filtre_max,
+                 "sexe"=sexe,
+                 "autres_vars"=autres_vars),
+            class=c("agregation","list"))
+  
   
 }
 

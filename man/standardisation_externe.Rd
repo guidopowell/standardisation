@@ -7,20 +7,20 @@
 \usage{
 standardisation_externe(
   donnees,
-  unite,
-  age_cat,
+  unite = NULL,
+  age_cat = NULL,
   age_cat_mins = NULL,
   age_filtre_max = Inf,
   sexe = NULL,
-  numerateur,
-  denominateur,
-  ref_externe_annee = 2022,
+  numerateur = NULL,
+  denominateur = NULL,
+  ref_externe_annee = NULL,
   ref_externe_code = "99",
   multiplicateur = 1
 )
 }
 \arguments{
-\item{donnees}{Un dataframe contenant les données à analyser.}
+\item{donnees}{Un dataframe contenant les données à analyser. Les valeurs NA ne sont pas permises.}
 
 \item{unite}{Un champ dans le dataframe qui indique l'unité d'analyse (par exemple, la région ou l'année).}
 
@@ -50,6 +50,7 @@ Une liste contenant deux éléments : "Resultat" (un dataframe contenant les ré
 Cette fonction applique une standardisation externe à des données agrégées, 
 prenant comme référence un fichier de données pop_ref réprésentant la population du Québec 
 stratifiée par âge et sexe, à de différentes années et niveaux géographiques. 
+Les intervalles de confiance sont issues du package `PHEIndicatormethods`.
 La standardisation externe doit être directe.
 }
 \examples{

@@ -37,15 +37,15 @@ devtools::install_github("guidopowell/standardisation")
 
 ```
 
-
-
 ## Description courte
 
-Le package comprend trois fonctions principales :
+Le package comprend trois fonctions d'analyse et deux fonctions de visualisation :
 
 `agregation()` : Cette fonction est conçue pour transformer des données individuelles ou partiellement agrégées en un format adapté pour les fonctions de standardisation. Elle peut gérer une large gamme de types et de formes de données, garantissant une flexibilité pour répondre à divers besoins d'agrégation de données.
 
 Il convient de noter que les données entièrement agrégées qui répondent déjà aux exigences des fonctions de standardisation peuvent contourner cette étape et passer directement à la standardisation.
+
+`plot.agregation()` : Cette fonction visualise un heatmap des données agrégées pour validation (il suffit d'appeler la fonction `plot` avec un objet de classe agregation).
 
 `standardisation_interne()` : Cette fonction applique une standardisation interne à des données agrégées. Dans le processus de standardisation, elle utilise soit la somme des données d'entrée comme population de référence ou une unité spécifiée par `reference_unite`. La fonction ajuste pour des facteurs tels que le groupe d'âge, le sexe, et d'autres variables fournies
 
@@ -54,6 +54,8 @@ La standardisation interne peut-être directe ou indirecte.
 `standardisation_externe()` : Cette fonction applique une standardisation externe à des données agrégées, prenant comme référence un fichier de données `pop_ref` réprésentant la population du Québec stratifiée par âge et sexe, à de différentes années et niveaux géographiques. Cette approche est utile lorsque les données à ajuster ne sont pas suffisamment représentatif de la population (par exemple une petite cohorte de patients ayant reçu un nouveau médicamment).
 
 La standardisation externe doit être directe car les numérateurs de la population référence ne sont pas disponible.
+
+`plot.standardisation_list()` : Cette fonction produit un graphiques à barres ou de points pour visualiser les résultats de la standardisation (il suffit d'appeler la fonction `plot` avec un objet de classe standardisation_list).
 
 <br>
 
@@ -75,45 +77,73 @@ agr<-agregation(donnees = donnees_sim %>% filter(annee == "2022"),
 
 <br>
 
-Une fois agrégée, les données peuvent être standardisées, dans cet exemple on fait une standardisation interne et indirecte. Le regroupement de la variable d'âge de la fonction agregation sort une variable nommée "AGE_CAT" et des colonnes "num" et "denom" pour les numérateurs et dénominateurs respectivement.
+On peut valider les résultats de l'agrégation rapidement en les visualisant.
 
-```{r echo=T, collapse=T}
-st_i<-standardisation_interne(donnees = agr,
-                            unite   = "rss",
-                            age_cat = "AGE_CAT" ,
-                            numerateur = "num",
-                            denominateur = "denom",
-                            methode = "indirecte",
-                            multiplicateur = 100)
+```{r echo=T, fig.show='hide', collapse=T}
+plot(agr)
 ```
 
-On peut vérifier l'objet "Resultats" de la standardisation dans la liste d'objets sortants (l'objet "Details" contient les strates d'agrégation)
-
-```{r echo=T, collapse=T}
-
-st_i$Resultat
+```{r, fig.align="center",out.width = "70%", fig.border = "none", echo=FALSE}
+knitr::include_graphics("vignettes/plot_agregation.PNG")
 ```
 
 <br>
 
+Une fois agrégée, les données peuvent être standardisées, dans cet exemple on fait une standardisation interne et indirecte. Les fonctions de standardisation retiennent les arguments de la fonction d'agrégation pour faciliter la standardisation.
+
+```{r echo=T, collapse=T}
+st_i<-standardisation_interne(donnees = agr,
+                            methode = "indirecte")
+```
+
+On peut vérifier les résultats de la standardisation (l'autre objet "Details" contient les strates d'agrégation). Les intervalles de confiance sont issues du package `PHEIndicatormethods`. 
+
+```{r echo=T, collapse=T}
+
+st_i
+```
+
+<br>
+
+Il est aussi possible de visualiser les résultats de standardisation.
+
+```{r echo=T, fig.show='hide', collapse=T}
+
+plot(st_i)
+
+```
+
+```{r, fig.align="center", out.width = "70%",fig.border = "none", echo=FALSE}
+knitr::include_graphics("vignettes/plot_indirect.PNG")
+```
+
+<br>
+<br>
 Et voici ici un exemple d'une standardisation externe et directe. Notez que les groupes d'âges doivent être spéficiés de nouveau pour permettre la correspondance avec le dataframe de référence externe. La valeur 99 pour ref_externe_code fait référence au niveau géographique de l'ensemble du Québec.
 
 ```{r echo=T, collapse=T}
 
 st_e<-standardisation_externe(donnees = agr,
-                            unite   = "rss",
-                            age_cat = "AGE_CAT" ,
-                            age_cat_mins = c(0,50,60,70),
-                            numerateur = "num",
-                            denominateur = "denom",
                             ref_externe_annee = 2022,
                             ref_externe_code = "99",
                             multiplicateur = 100)
 
-st_e$Resultat
+st_e
 ```
 
 <br>
+
+Et la visualisation.
+
+```{r echo=T, fig.show="hide", collapse=T, warning=FALSE}
+
+plot(st_e)
+
+```
+```{r, fig.align="center",out.width = "70%", fig.border = "none", echo=FALSE}
+knitr::include_graphics("vignettes/plot_externe.PNG")
+```
+
 
 <br>
 
@@ -143,13 +173,13 @@ Il y a trois façons d'identifier les numérateurs dans un ensemble de données 
 knitr::include_graphics("vignettes/image_num_filtre.PNG")
 ```
 
-2.  `type_num = "total interne"` : L'ensemble de données individuelles fourni est compté comme numérateur. Par exemple dans un cas où une extraction de données ne représente que les patients à analyser. 
+1.  `type_num = "total interne"` : L'ensemble de données individuelles fourni est compté comme numérateur. Par exemple dans un cas où une extraction de données ne représente que les patients à analyser.
 
 ```{r, out.width = "20%", fig.align="center", fig.border = "none", echo=FALSE}
 knitr::include_graphics("vignettes/image_num_total.PNG")
 ```
 
-3.  `type_num = "colonne agrégée"` : Les données sont partiellement agrégées et une colonne spécifie les décomptes des numérateurs. Cette option nécessite l'argument `numerateur_agr_col.`
+1.  `type_num = "colonne agrégée"` : Les données sont partiellement agrégées et une colonne spécifie les décomptes des numérateurs. Cette option nécessite l'argument `numerateur_agr_col.`
 
 ```{r, out.width = "20%", fig.align="center", fig.border = "none", echo=FALSE}
 knitr::include_graphics("vignettes/image_num_col.PNG")
@@ -167,14 +197,13 @@ De même, il y a trois façons d'obtenir les dénominateurs :
 knitr::include_graphics("vignettes/image_denom_total.PNG")
 ```
 
-
-2.  `type_denom = "externe"` : Un ensemble de données de population externe agrégé , le fichier `pop_ref`, est utilisé comme dénominateurs. Cette option nécessite l'argument `denom_externe_type_unite`. Si ce dernier est "Régional" (au lieu de "Annuel"), il faut préciser une valeur pour `denom_externe_annee` et `denom_externe_geo`. Un dernier argument facultatif est `denom_externe_regroupement_unite` (voir plus bas).
+1.  `type_denom = "externe"` : Un ensemble de données de population externe agrégé , le fichier `pop_ref`, est utilisé comme dénominateurs. Cette option nécessite l'argument `denom_externe_type_unite`. Si ce dernier est "Régional" (au lieu de "Annuel"), il faut préciser une valeur pour `denom_externe_annee` et `denom_externe_geo`. Un dernier argument facultatif est `denom_externe_regroupement_unite` (voir plus bas).
 
 ```{r, out.width = "20%", fig.align="center", fig.border = "none", echo=FALSE}
 knitr::include_graphics("vignettes/image_denom_ext.PNG")
 ```
 
-3.  `type_denom = "colonne_agrégée"` : Les données sont partiellement agrégées et une colonne spécifie les décomptes des dénominateurs. Cette option nécessite l'argument `denominateur_agr_col.`
+1.  `type_denom = "colonne_agrégée"` : Les données sont partiellement agrégées et une colonne spécifie les décomptes des dénominateurs. Cette option nécessite l'argument `denominateur_agr_col.`
 
 ```{r, out.width = "20%", fig.align="center", fig.border = "none", echo=FALSE}
 knitr::include_graphics("vignettes/image_denom_col.PNG")
@@ -228,7 +257,8 @@ agr_avec_regroup<-agregation(donnees = donnees_regroup,
                           "C.N._Ch-Ap." = c("03","12"))
 )
 
-print(agr_avec_regroup,n = Inf)
+agr_avec_regroup
+
 ```
 
 <br>
@@ -245,20 +275,16 @@ La standardisation interne permet de prendre comme référence la population de 
 
 ```{r echo=T, collapse=T}
 st_i<-standardisation_interne(donnees = agr,
-                            unite   = "rss",
-                            age_cat = "AGE_CAT" ,
-                            numerateur = "num",
-                            denominateur = "denom",
-                            reference_unite = "06_Montréal",
-                            methode = "indirecte",
-                            multiplicateur = 100)
+                              reference_unite = "06_Montréal",
+                              methode = "indirecte",
+                              multiplicateur = 100)
 ```
 
 Dans l'élement "Resultats" on contate que le ratio pour Montréal est de 1, car le nombre observés de cas est le même que le "expected" étant donné que c'est la référence.
 
 ```{r echo=T, collapse=T}
 
-st_i$Resultat
+st_i
 ```
 
 <br>
@@ -267,11 +293,7 @@ st_i$Resultat
 
 ## `standardisation_externe`
 
-La standardisation externe permet d'ajuster les unités d'analyse (régions ou années) en prenant comme référence le fichier de population du Québec, `ref_pop` . Il est important de bien spécifier plusieurs arguments pour permettre l'appariement des données de référence. À noter que seulement l'ajustement par âge et sexe est possible dans la standardisation externe car les taux de référence ne sont pas disponibles pour d'autres variables.  
-
--   `age_cat_mins` doit préciser quels groupes d'âges sont représentés dans la variable `age` pour permettre la même catégorisation de la variable d'âge des données externes
-
--   `age_filtre_max` est facultatif, mais il doit être précisé si les données d'analyse ont un âge maximum.
+La standardisation externe permet d'ajuster les unités d'analyse (régions ou années) en prenant comme référence le fichier de population du Québec, `ref_pop` . À noter que seulement l'ajustement par âge et sexe est possible dans la standardisation externe car les taux de référence ne sont pas disponibles pour d'autres variables.
 
 -   `ref_externe_annee` . Le fichier `pop_ref` contient des données de population datant de 1996 jusqu'à 2041 (projections). Il faut sélectionner une année comme référence.
 
@@ -291,25 +313,19 @@ agr_ext<-agregation(donnees = donnees_sim ,
                 type_denom = "externe",
                 denom_externe_type_unite = "Annuel")
 
-print(agr_ext)
+agr_ext
 ```
 
 Maintenant nous poursuivons avec une standardisation externe de ces données. Cette fois il faut préciser une année pour `ref_externe_annee` car il n'y a qu'une seule année qui sert comme référence. La valeur "99" pour `ref_externe_code` précise que c'est l'ensemble du Québec qui sert comme référence (d'autres valeurs sont permises si on veut une région particulière comme référence).
 
-Ici le multiplicateur est beaucoup plus grand pour permettre des taux plus facile à interpreter. Finalement, notez qu'on doit encore préciser les valeurs de `age_cat_mins` et qu'elles doivent être identiques à celles dans l'ensemble de données.
+Ici le multiplicateur est beaucoup plus grand pour permettre des taux plus facile à interpreter.
 
 ```{r echo=T, collapse=T}
 
 st_ext<-standardisation_externe(donnees = agr_ext,
-                            unite   = "annee",
-                            age_cat = "AGE_CAT" ,
-                            age_cat_mins = c(18,65,85),
-                            sexe="sexe",
-                            numerateur = "num",
-                            denominateur = "denom",
                             ref_externe_annee = 2022,
                             ref_externe_code = "99",
                             multiplicateur = 100000)
 
-st_ext$Resultat
+plot(st_ext, Annuel=T)
 ```

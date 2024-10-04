@@ -7,19 +7,19 @@
 \usage{
 standardisation_interne(
   donnees,
-  unite,
-  age_cat,
+  unite = NULL,
+  age_cat = NULL,
   sexe = NULL,
   autres_vars = NULL,
-  numerateur,
-  denominateur,
+  numerateur = NULL,
+  denominateur = NULL,
   reference_unite = NULL,
   methode = "directe",
   multiplicateur = 1
 )
 }
 \arguments{
-\item{donnees}{Un dataframe contenant les données.}
+\item{donnees}{Un dataframe contenant les données. Les valeurs NA ne sont pas permises.}
 
 \item{unite}{Une chaîne indiquant l'unité d'analyse.}
 
@@ -47,6 +47,7 @@ Une liste avec deux éléments, "Resultat" et "Details". "Resultat" contient les
 Cette fonction applique une standardisation interne à des données agrégées. 
 Dans le processus de standardisation, elle utilise soit la somme des données d'entrée comme population de référence
 ou une unité spécifiée par `reference_unite`. La fonction ajuste pour des facteurs tels que le groupe d'âge, le sexe, et d'autres variables fournies
+Les intervalles de confiance sont issues du package `PHEIndicatormethods`.
 La standardisation interne peut-être directe ou indirecte.
 }
 \examples{
